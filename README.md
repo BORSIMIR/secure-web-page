@@ -1,21 +1,22 @@
-# Secure Web Page
+# Secure Web Page Protection
 
-A secure web page with built-in JavaScript-based security measures to prevent unauthorized access to developer tools, copying, and content inspection. This project helps maintain page integrity and protect sensitive content from being easily accessed or downloaded.
+## Overview
+This project is a secure web page designed to prevent unauthorized actions such as inspecting elements, saving the page, and accessing browser developer tools. It includes several front-end security features to enhance content protection.
 
 ## Features
+- **Right-click Disabled** – Prevents quick access to developer tools.
+- **Keyboard Shortcuts Blocked** – Disables F12, Ctrl+Shift+I, Ctrl+Shift+J, and Ctrl+U.
+- **Save Prevention** – Blocks Ctrl+S to stop page saving.
+- **Debugger Detection** – Detects open developer tools and reloads the page.
+- **Content Protection** – Disables text selection and dragging.
+- **Security Monitoring** – A live system that checks for threats every 10 seconds.
 
-- **Right-Click Disabled:** Prevents users from accessing the context menu.
-- **Blocked Developer Tools Access:** Prevents actions such as:
-  - `F12` (DevTools)
-  - `Ctrl + Shift + I` (Inspect Element)
-  - `Ctrl + Shift + J` (Console)
-  - `Ctrl + U` (View Source)
-  - `Ctrl + S` (Save Page As)
-- **Debugger Detection:** Automatically reloads the page if DevTools are detected.
-- **Text Selection & Dragging Disabled:** Prevents copying content by selecting or dragging elements.
+## Technologies Used
+- **HTML5**
+- **CSS3 (Bootstrap 5)**
+- **JavaScript**
 
 ## Installation
-
 1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-username/secure-web-page.git
+   ```bash
+   git clone https://github.com/yourusername/secure-web-page.git
