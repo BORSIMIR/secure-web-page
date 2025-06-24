@@ -1,45 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Advanced Secure Web Page | Protected Content</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h2 class="mb-4">Secure Web Page</h2>
-        <p>This page has security measures to prevent unwanted actions such as inspecting elements, viewing the source code, or using browser developer tools.</p>
+        <h2><i class="fas fa-lock me-2"></i> Advanced Secure Web Page</h2>
+        <p class="lead">This page implements multiple layers of security to protect content and prevent unauthorized access or inspection.</p>
         
-        <p><strong>Security Monitoring Status:</strong></p>
-        <div id="infoBox" class="alert alert-info">Monitoring system active...</div>
-        <p><strong>Next Security Check In:</strong> <span id="countdown">10</span> seconds</p>
+        <div id="securityStatus">
+            <div class="status-indicator"></div>
+            <span>Security System Status: <strong>Active</strong></span>
+        </div>
+        
+        <div class="alert alert-info">
+            <i class="fas fa-shield-alt me-2"></i>
+            <span id="statusMessage">Real-time monitoring system active...</span>
+        </div>
+        
+        <div class="countdown-container">
+            <p class="mb-1"><strong>Next Security Check In:</strong></p>
+            <div id="countdown">10</div>
+        </div>
 
-        <ul class="text-start">
-            <li>Disabling right-click to prevent quick access to developer tools.</li>
-            <li>Blocking F12, Ctrl+Shift+I, Ctrl+Shift+J, and Ctrl+U to prevent direct inspection.</li>
-            <li>Preventing Ctrl+S (Save Page As) to protect content from being downloaded.</li>
-            <li>Detecting debugger usage and reloading the page if dev tools are detected.</li>
-            <li>Disabling text selection and dragging to prevent content copying.</li>
-        </ul>
+        <div class="security-features">
+            <ul class="list-unstyled">
+                <li>Advanced context menu and developer tools detection</li>
+                <li>Real-time debugger and inspection prevention</li>
+                <li>Content protection against copying and saving</li>
+                <li>Iframe embedding detection and prevention</li>
+                <li>Automated threat detection and response system</li>
+                <li>Tamper detection and automatic page recovery</li>
+                <li>Print protection and dark mode support</li>
+            </ul>
+        </div>
 
-        <button id="secureButton" class="btn btn-primary mt-3">Click Me</button>
+        <button id="secureButton" class="btn btn-advanced mt-3">
+            <i class="fas fa-key me-2"></i>Security Verification
+        </button>
+        
+        <div class="security-badge">
+            <i class="fas fa-badge-check"></i>
+            <span>Advanced Security Protocol v2.4.1 | Last Updated: <span id="currentDate"></span></span>
+        </div>
     </div>
 
     <!-- Modal Popup -->
-    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="infoModalLabel">Security Alert</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="infoModalLabel"><i class="fas fa-shield-virus me-2"></i>Security Verification</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    Security measures are in place. Stay protected!
+                <div class="modal-body text-center py-4">
+                    <i class="fas fa-check-circle text-success mb-3" style="font-size: 3rem;"></i>
+                    <h4 class="mb-3">Security Check Complete</h4>
+                    <p>All security measures are active and functioning properly.</p>
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Content Protection:</span>
+                            <span class="badge bg-success">Active</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Inspection Prevention:</span>
+                            <span class="badge bg-success">Active</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Tamper Detection:</span>
+                            <span class="badge bg-success">Active</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tamper Warning Modal -->
+    <div class="modal fade" id="tamperModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Security Alert</h5>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="fas fa-lock text-danger mb-3" style="font-size: 3rem;"></i>
+                    <h4 class="mb-3">Unauthorized Access Detected</h4>
+                    <p>Security measures have been triggered due to suspicious activity.</p>
+                    <p>The page will automatically recover in <span id="recoveryCountdown">5</span> seconds.</p>
                 </div>
             </div>
         </div>
@@ -49,3 +107,4 @@
     <script src="security.js"></script>
 </body>
 </html>
+
