@@ -54,28 +54,64 @@
             });
             
             // Comprehensive Key Combination Prevention
-            document.addEventListener("keydown", (event) => {
-                // DevTools hotkeys
-                if (event.key === "F12" || 
-                    (event.ctrlKey && event.shiftKey && (event.key === "I" || event.key === "J" || event.key === "C")) || 
-                    (event.ctrlKey && event.key === "U") ||
-                    (event.ctrlKey && event.key === "S") ||
-                    (event.ctrlKey && event.key === "P") ||
-                    (event.metaKey && event.altKey && event.key === "I") || // Mac dev tools
-                    (event.key === "F2") || // IE dev tools
-                    (event.ctrlKey && event.shiftKey && event.key === "K") || // Firefox web console
-                    (event.ctrlKey && event.shiftKey && event.key === "M") || // Firefox responsive mode
-                    (event.ctrlKey && event.shiftKey && event.key === "D") // Firefox debugger
-                ) {
+             document.addEventListener("keydown", (event) => {
+                // Check for Ctrl/Command key combinations first
+                if (event.ctrlKey || event.metaKey) {
+                    // List of single-letter keys to block with Ctrl
+                    const blockedSingleKeys = ['u', 's', 'p', 'o', 'r', 'n', 'w', 'q', 't', 'a', 'c', 'x', 'v', 'z', 'y', 'f', 'h'];
+                    
+                    if (blockedSingleKeys.includes(event.key.toLowerCase())) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        logSecurityEvent(`Keyboard shortcut blocked: Ctrl+${event.key}`);
+                        return false;
+                    }
+
+                    // Check for Ctrl+Shift combinations
+                    if (event.shiftKey) {
+                        const blockedShiftKeys = ['i', 'j', 'c', 'k', 'm', 'd'];
+                        if (blockedShiftKeys.includes(event.key.toLowerCase())) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            logSecurityEvent(`Keyboard shortcut blocked: Ctrl+Shift+${event.key}`);
+                            return false;
+                        }
+                    }
+                }
+
+                // Block function keys
+                if (event.key.startsWith("F") && !isNaN(event.key.slice(1))) {
+                    // Block F1-F12
+                    const fNumber = parseInt(event.key.slice(1));
+                    if (fNumber >= 1 && fNumber <= 12) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        logSecurityEvent(`Function key blocked: ${event.key}`);
+                        return false;
+                    }
+                }
+
+                // Block PrintScreen
+                if (event.key === "PrintScreen") {
                     event.preventDefault();
-                    logSecurityEvent(`Keyboard shortcut blocked: ${event.key}`);
+                    event.stopPropagation();
+                    logSecurityEvent("PrintScreen blocked");
                     return false;
                 }
-                
-                // Prevent Ctrl+A (select all)
-                if (event.ctrlKey && event.key === "a") {
+
+                // Block Alt+Arrow keys
+                if (event.altKey && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
                     event.preventDefault();
-                    logSecurityEvent("Select all attempt blocked");
+                    event.stopPropagation();
+                    logSecurityEvent(`Navigation blocked: Alt+${event.key}`);
+                    return false;
+                }
+
+                // Block Alt+F4
+                if (event.altKey && event.key === "F4") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    logSecurityEvent("Alt+F4 blocked");
                     return false;
                 }
             });
@@ -200,5 +236,11 @@
                     originalConsoleLog.apply(console, ["%cSecurity System: Unauthorized console access detected", "color: red; font-weight: bold;"]);
                     originalConsoleLog.apply(console, arguments);
                 };
+                
+                // Disable view source via empty menu
+                document.onmenu = function() { return false; };
+                
+                // Disable status bar text changes
+                window.onbeforeunload = function() { return false; };
             }
         });
